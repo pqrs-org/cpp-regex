@@ -6,7 +6,6 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See https://www.boost.org/LICENSE_1_0.txt)
 
-#include <format>
 #include <pqrs/hash.hpp>
 #include <pqrs/json.hpp>
 #include <regex>
@@ -56,7 +55,7 @@ inline void from_json(const nlohmann::json& json, regex& value) {
   try {
     value = regex(s);
   } catch (std::exception& e) {
-    throw pqrs::json::unmarshal_error(std::format("{0}: `{1}`", e.what(), s));
+    throw pqrs::json::unmarshal_error(std::string(e.what()) + ": `" + s + "`");
   }
 }
 } // namespace pqrs
