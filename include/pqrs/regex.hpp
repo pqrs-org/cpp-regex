@@ -1,6 +1,6 @@
 #pragma once
 
-// pqrs::regex v0.0
+// pqrs::regex v1.0
 
 // (C) Copyright Takayama Fumihiko 2025.
 // Distributed under the Boost Software License, Version 1.0.
