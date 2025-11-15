@@ -9,6 +9,7 @@ Utilities of `std::regex`.
 
 cpp-regex depends the following classes.
 
+- [pqrs::hash](https://github.com/pqrs-org/cpp-hash)
 - [pqrs::json](https://github.com/pqrs-org/cpp-json)
 
 ## Install
