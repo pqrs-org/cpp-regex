@@ -1,7 +1,7 @@
 #include <iostream>
 #include <pqrs/regex.hpp>
 
-int main(void) {
+int main() {
   pqrs::regex regex("^com\\.apple\\.Terminal$");
 
   std::cout << regex.get_string() << std::endl;

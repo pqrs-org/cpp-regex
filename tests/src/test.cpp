@@ -1,8 +1,9 @@
 #include <boost/ut.hpp>
 #include <pqrs/regex.hpp>
 #include <unordered_map>
+#include <unordered_set>
 
-int main(void) {
+int main() {
   using namespace boost::ut;
   using namespace boost::ut::literals;
   using namespace std::literals;
@@ -15,6 +16,23 @@ int main(void) {
     try {
       pqrs::regex regex("^com\\.apple\\.Terminal$");
       expect("^com\\.apple\\.Terminal$"sv == regex.get_string());
+      expect(std::regex_constants::ECMAScript == regex.get_flags());
+      expect(std::regex_search("com.apple.Terminal"s, regex.get_regex()));
+      expect(!std::regex_search("com.apple.Safari"s, regex.get_regex()));
+    } catch (const std::exception& e) {
+      expect(false);
+    }
+
+    //
+    // Flags
+    //
+
+    try {
+      pqrs::regex regex("^com\\.apple\\.terminal$",
+                        std::regex_constants::ECMAScript | std::regex_constants::icase);
+      expect("^com\\.apple\\.terminal$"sv == regex.get_string());
+      expect((std::regex_constants::ECMAScript | std::regex_constants::icase) == regex.get_flags());
+      expect(std::regex_search("com.apple.Terminal"s, regex.get_regex()));
     } catch (const std::exception& e) {
       expect(false);
     }
@@ -72,6 +90,11 @@ int main(void) {
     std::unordered_map<pqrs::regex, bool> m;
     pqrs::regex regex;
     m[regex] = true;
+
+    std::unordered_set<pqrs::regex> s;
+    s.insert(pqrs::regex("^abc$"));
+    s.insert(pqrs::regex("^abc$", std::regex_constants::ECMAScript | std::regex_constants::icase));
+    expect(2_u == s.size());
   };
 
   return 0;
